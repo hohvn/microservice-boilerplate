@@ -1,0 +1,73 @@
+buildscript {
+    project.ext {
+        springBootVersion = '2.0.4.RELEASE'
+        jarName = 'config-server'
+        versionName = '0.0.1'
+        gradleDockerVersion = '1.2'
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "se.transmode.gradle:gradle-docker:${project.gradleDockerVersion}"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'docker'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.thaitran'
+version = '0.0.1-SNAPSHOT'
+mainClassName = 'com.thaitran.configserver.ConfigServerApplication'
+sourceCompatibility = 1.8
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+
+ext {
+    springCloudVersion = 'Finchley.SR1'
+}
+
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-config-server')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = false
+    applicationName = project.jarName
+    tagVersion = project.versionName
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        // Copy the built fat jar to the Docker plugin staging directory
+        copy {
+            from jar
+            into stageDir
+        }
+        // Copy the run.sh file to the Docker plugin staging directory
+        copy {
+            from "${project.buildDir}/resources/main/run.sh"
+            into stageDir
+        }
+    }
+}
+
+run {
+    jvmArgs = ['-Xdebug', '-Xrunjdwp:server=y,transport=dt_socket,address=4100,suspend=n','-Dspring.profiles.active=default']
+}

@@ -1,0 +1,14 @@
+zuul:
+  prefix: /api
+  routes:
+    test:
+      path: /redirect/**
+      url: http://google.com
+    demo-service:
+      path: /demo/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 9090
