@@ -2,7 +2,7 @@ buildscript {
     project.ext {
         springBootVersion = '2.0.4.RELEASE'
         jarName = 'config-server'
-        versionName = '0.0.1'
+        versionName = '1.0'
         gradleDockerVersion = '1.2'
     }
     repositories {
@@ -22,8 +22,8 @@ apply plugin: 'docker'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-group = 'com.thaitran'
-version = '0.0.1-SNAPSHOT'
+//group = 'com.thaitran'
+//version = '0.0.1-SNAPSHOT'
 mainClassName = 'com.thaitran.configserver.ConfigServerApplication'
 sourceCompatibility = 1.8
 
