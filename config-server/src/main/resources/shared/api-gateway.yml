@@ -1,14 +1,54 @@
-zuul:
-  prefix: /api
-  routes:
-    test:
-      path: /redirect/**
-      url: http://google.com
-    demo-service:
-      path: /demo/**
+#sample:
+#  zipkin:
+#    enabled: true
+server:
+  port: 8880
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
 eureka:
   client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-server:
-  port: 9090
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    instance:
+        preferIpAddress: true
+spring:
+  zipkin:
+    baseUrl: http://localhost:8889/
+  sleuth:
+    sampler:
+      percentage: 1.0
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: ping-service
+        uri: lb://ping-service
+        predicates:
+        - Path=/ping/**
+        filters:
+        - RewritePath=/ping/(?<path>.*), /$\{path}
+      #      - id: message-service
+      #        uri: lb://message-service
+      #        predicates:
+      #        - Path=/message/**
+      #        filters:
+      #        - RewritePath=/message/(?<path>.*), /$\{path}
+#      - id: auth-service
+#        uri: lb://auth-service
+#        predicates:
+#        - Path=/auth/**
+#        filters:
+#        - RewritePath=/auth/(?<path>.*), /$\{path}
+#      - id: tag-service
+#        uri: lb://tag-service
+#        predicates:
+#        - Path=/tag/**
+#        filters:
+#        - RewritePath=/tag/(?<path>.*), /$\{path}
