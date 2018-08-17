@@ -32,8 +32,8 @@ spring:
         uri: lb://ping-service
         predicates:
         - Path=/ping/**
-        filters:
-        - RewritePath=/ping/(?<path>.*), /$\{path}
+#        filters:
+#        - RewritePath=/ping/(?<path>.*), /$\{path}
       #      - id: message-service
       #        uri: lb://message-service
       #        predicates:
