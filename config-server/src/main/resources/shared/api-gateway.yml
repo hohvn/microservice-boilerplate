@@ -19,6 +19,8 @@ eureka:
 spring:
   zipkin:
     baseUrl: http://localhost:8889/
+    sender:
+      type: web
   sleuth:
     sampler:
       percentage: 1.0
