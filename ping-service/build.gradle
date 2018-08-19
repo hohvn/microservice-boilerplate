@@ -26,6 +26,7 @@ repositories {
 
 ext {
     springCloudVersion = 'Finchley.SR1'
+    springBootAdminVersion = '2.0.2'
 }
 
 dependencies {
@@ -41,7 +42,7 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-
+    compile("de.codecentric:spring-boot-admin-starter-client:${springBootAdminVersion}")
     runtime('org.springframework.boot:spring-boot-devtools')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

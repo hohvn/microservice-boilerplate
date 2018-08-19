@@ -1,2 +1,12 @@
 server:
   port: 8889
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080

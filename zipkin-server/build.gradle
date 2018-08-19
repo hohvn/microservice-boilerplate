@@ -28,6 +28,7 @@ repositories {
 
 ext {
     springCloudVersion = 'Finchley.SR1'
+    springBootAdminVersion = '2.0.2'
 }
 
 dependencies {
@@ -36,6 +37,7 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-config')
     compile('org.springframework.cloud:spring-cloud-starter-zipkin')
     compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
+    compile("de.codecentric:spring-boot-admin-starter-client:${springBootAdminVersion}")
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime("io.zipkin.java:zipkin-autoconfigure-ui:${zipkinGUIVersion}")
     compile("io.zipkin.java:zipkin-server:${zipkinVersion}") {
